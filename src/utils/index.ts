@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-const isFalsy = (value: any) => (value === 0 ? false : !value);
+const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 // 在处理函数的时候，不要污染传入的对象
 const cleanObject = (object: object) => {
   const result = { ...object };
@@ -21,7 +21,7 @@ const useMount = (callback: () => void) => {
   }, []);
 };
 
-const useDebounce = (value: any, delay?: number) => {
+const useDebounce = (value: unknown, delay?: number): any => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // 每次重新渲染，都会导致原组件（包含子组件）的销毁，以及新组件（包含子组件）的诞生。
