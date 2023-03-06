@@ -1,4 +1,24 @@
 import { useState, useEffect } from "react";
+// import { Person } from '../try-use-array';
+
+const useArray = <T>(persons: T[]) => {
+  const [value, setValue] = useState(persons);
+
+  const add = (args: T) => {
+    setValue([...value, args]);
+  };
+
+  const clear = () => {
+    setValue([]);
+  };
+  const removeIndex = (num: number) => {
+    const tempValue = [...value];
+    setValue(tempValue.slice(1));
+  };
+
+  return { value, clear, removeIndex, add };
+};
+
 const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 // 在处理函数的时候，不要污染传入的对象
 const cleanObject = (object: object) => {
@@ -21,7 +41,7 @@ const useMount = (callback: () => void) => {
   }, []);
 };
 
-const useDebounce = (value: unknown, delay?: number): any => {
+const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // 每次重新渲染，都会导致原组件（包含子组件）的销毁，以及新组件（包含子组件）的诞生。
@@ -37,7 +57,7 @@ const useDebounce = (value: unknown, delay?: number): any => {
   return debouncedValue;
 };
 
-export { cleanObject, useMount, useDebounce };
+export { cleanObject, useMount, useDebounce, useArray };
 
 // const debounce = (func, delay) => {
 //   let timeout;
