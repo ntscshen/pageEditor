@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import ProjectList from "screens/project-list/index";
 import { TsReactTest } from "try-use-array";
+import { LoginScreen } from "screens/login/index";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <>React自由，vue一堆概念</>
         {/* <TsReactTest />  */}
-        <ProjectList />
+        {/* <ProjectList /> */}
+        <LoginScreen />
       </header>
     </div>
   );
