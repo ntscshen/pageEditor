@@ -4,7 +4,7 @@ interface LoginParam {
   username: string;
   password: string;
 }
-const apiUrl = process.env.REACT_APP_API_RUL;
+const apiUrl = process.env.REACT_APP_API_URL;
 export const LoginScreen = () => {
   const login = (param: LoginParam) => {
     fetch(`${apiUrl}/login`, {

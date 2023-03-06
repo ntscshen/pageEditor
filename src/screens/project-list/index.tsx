@@ -4,7 +4,7 @@ import List from "./list";
 import { cleanObject, useDebounce, useMount } from "utils";
 import qs from "qs";
 
-const apiUrl = process.env.REACT_APP_API_RUL;
+const apiUrl = process.env.REACT_APP_API_URL;
 console.log("apiUrl :>> ", apiUrl);
 
 const ProjectList = () => {
