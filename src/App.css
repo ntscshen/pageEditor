@@ -1,3 +1,13 @@
+html {
+  /* 默认字体大小16 16 * 62.% === 10px, 1rem === 10px, 比较容易进行单位换算 */
+  font-size: 62.5%;
+}
+
+html body #root .App {
+  /* 页面最低的高度 === 页面视口的高度 */
+  min-height: 100vh;
+}
+
 .App {
   text-align: center;
 }
