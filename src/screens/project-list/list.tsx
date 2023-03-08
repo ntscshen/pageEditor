@@ -1,5 +1,6 @@
 import React from "react";
 import { User } from "./search-panel";
+import { Routes, Route, Link } from "react-router-dom";
 
 interface Project {
   id: string;
@@ -27,7 +28,11 @@ const list = ({ list, users }: ListProps) => {
         {list.map((project) => {
           return (
             <tr key={project.id}>
-              <td>{project.name}</td>
+              <td style={{ padding: 20, backgroundColor: "#646464" }}>
+                <Link to={project.id}>
+                  {project.id}-{project.name}
+                </Link>
+              </td>
               <td>
                 {users.find((user) => user.id === project.personId)?.name ||
                   "未知"}
