@@ -5,6 +5,14 @@ import { cleanObject, useDebounce, useMount } from "utils";
 import qs from "qs";
 import styled from "@emotion/styled";
 
+import {
+  counterSliceActions,
+  incrementAsync,
+  selectCount,
+} from "./project-list.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "store";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 console.log("apiUrl :>> ", apiUrl);
 
@@ -16,7 +24,15 @@ const ProjectList = () => {
   const debouncedParam = useDebounce(param, 300);
   const [users, setUsers] = useState([]);
 
+  const [incrementAmount, setIncrementAmount] = useState("2");
+
+  const incrementValue = Number(incrementAmount) || 0;
+
   const [list, setList] = useState([]);
+
+  const count = useSelector(selectCount);
+  // const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     // console.log(pa ram)
@@ -42,6 +58,24 @@ const ProjectList = () => {
 
   return (
     <>
+      <div>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(counterSliceActions.decrement())}
+        >
+          -
+        </button>
+        <span style={{ fontSize: 56, color: "red" }}>{count}</span>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(counterSliceActions.increment())}
+        >
+          +
+        </button>
+        <button onClick={() => dispatch(incrementAsync(incrementValue))}>
+          Add Async
+        </button>
+      </div>
       <TestStyledComponent>998</TestStyledComponent>
       <SearchPanel param={param} setparam={setparam} users={users} />
       <List list={list} users={users} />
