@@ -51,8 +51,9 @@ export const counterSlice = createSlice({
         console.log("loading :>> ", "loading");
       })
       .addCase(incrementAsync.fulfilled, (state, action) => {
+        // 满足的
         state.status = "idle";
-        console.log("idle :>> ", "idle");
+        console.log("succeeded :>> ", "succeeded");
         state.value += action.payload;
       })
       .addCase(incrementAsync.rejected, (state) => {
