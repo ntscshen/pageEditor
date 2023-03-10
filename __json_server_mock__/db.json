@@ -53,5 +53,55 @@
       "organization": "外卖组",
       "created": 1400251593
     }
+  ],
+  "templates": [
+    {
+      "id": 1,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    },
+    {
+      "id": 2,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台2",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    },
+    {
+      "id": 3,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台3",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    },
+    {
+      "id": 4,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台4",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    },
+    {
+      "id": 5,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台5",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    },
+    {
+      "id": 6,
+      "src": "//os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+      "name": "页面可视化搭建平台6",
+      "author": "ntscshen",
+      "userNumber": 999,
+      "created": 1400251593
+    }
   ]
 }
