@@ -6,6 +6,7 @@ export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
     templateList: templateList.reducer,
+    // user: userSlice.reducer,
   },
 });
 
