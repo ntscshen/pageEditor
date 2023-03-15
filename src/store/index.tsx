@@ -1,11 +1,17 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { counterSlice } from "../screens/project-list/project-list.slice";
 import { templateList } from "../screens/home.slice";
+import {
+  EditorSlice,
+  CurrentElementSlice,
+} from "../screens/Editor/editor.slice";
 
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
     templateList: templateList.reducer,
+    components: EditorSlice.reducer,
+    currentElement: CurrentElementSlice.reducer,
     // user: userSlice.reducer,
   },
 });
