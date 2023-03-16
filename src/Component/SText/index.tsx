@@ -20,7 +20,6 @@ interface STextComponentProps {
 }
 
 const STextComponent = (props: STextComponentProps) => {
-  console.log("props :>> ", props);
   const { type } = props;
   const onHandleClick = () => {
     if (props?.actionType === "url" && props?.url) {

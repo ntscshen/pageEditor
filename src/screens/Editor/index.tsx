@@ -1,17 +1,28 @@
 import React, { useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-
+import _ from "lodash";
 import { HighlightOutlined, GithubOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "store";
 
-import { Col, Row } from "antd";
-import { editorSliceAction, selectEditor, EditorSlice } from "./editor.slice";
+import { Col, Row, Input, InputNumber, Slider } from "antd";
+import {
+  editorSliceAction,
+  selectEditor,
+  EditorSlice,
+  selectCurrentElement,
+  CurrentElementSliceAction,
+} from "./editor.slice";
 import SText from "../../Component/SText/index";
 import { defaultTemplates } from "Component/default.templates";
 import { counterSliceActions } from "screens/project-list/project-list.slice";
 import { Button } from "antd";
+import { mapPropsToForms } from "Component/default.props";
+import SInput from "Component/SInput";
+import SInputNumber from "Component/SInputNumber";
+import SSlider from "Component/SSlider";
+// import {} from '../'
 
 interface defaultTemplatesProps {
   id: number;
@@ -21,13 +32,14 @@ interface defaultTemplatesProps {
 }
 const Editor = (props: any) => {
   const dispatch = useDispatch<AppDispatch>();
+
   const components = useSelector(selectEditor);
-  console.log("components :>> ", components);
+
+  const CurrentComponents = useSelector(selectCurrentElement);
 
   useCallback(() => {}, []);
 
   const templatesRender = (templeate: any) => {
-    console.log("templeate :>> ", templeate);
     const { type } = templeate;
 
     switch (type) {
@@ -75,6 +87,44 @@ const Editor = (props: any) => {
     }
   };
 
+  let finalProps: any = [];
+  _.mapKeys(CurrentComponents.item, (value, key: any) => {
+    if (key) {
+      console.log("CurrentComponents :>> ", CurrentComponents);
+      console.log("key :>> ", key);
+      console.log("mapPropsToForms :>> ", mapPropsToForms);
+      // @ts-ignore
+      const mapProps = mapPropsToForms[key];
+      console.log("mapProps :>> ", mapProps);
+      mapProps && finalProps.push(mapProps);
+    }
+  });
+  console.log("finalProps :>> ", finalProps);
+
+  // text
+  // fontSize
+  // fontFamily
+  // fontWeight
+  // fontStyle
+  // textDecoration
+  // lineHeight
+  // textAlign
+  // color
+  // backgroundColor
+
+  const componentForm = (items: any) => {
+    switch (items?.component) {
+      case "SInput":
+        return <SInput {...items} />;
+      case "InputNumber":
+        return <SInputNumber {...items} />;
+      case "Slider":
+        return <SSlider {...items} />;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <ERow>
@@ -87,24 +137,59 @@ const Editor = (props: any) => {
           })}
         </EColLeft>
         <EColContent flex="auto">
-          {/* 390 844 */}
           <CContentDiv>
             {components.map(({ props }) => {
               return (
-                <div className="component-item">
+                <CContentComponentItem
+                  onClick={() => {
+                    dispatch(
+                      CurrentElementSliceAction.addCurrentComponent(props)
+                    );
+                  }}
+                >
                   <SText {...props} />
-                </div>
+                </CContentComponentItem>
               );
             })}
           </CContentDiv>
         </EColContent>
-        <EColRight flex="300px">EColRight-8</EColRight>
+        <EColRight flex="300px">
+          {finalProps.map((item: any) => {
+            return (
+              <PropertyCompontentWrap>
+                <PropertyCompontentLeft>{item.text}: </PropertyCompontentLeft>
+                <PropertyCompontentRight>
+                  {componentForm(item)}
+                  {/* <item.component {...item} /> */}
+                  {/* <Input placeholder="Basic usage" /> */}
+                  {/* <InputNumber min={1} max={10} defaultValue={3} />
+                  <Slider defaultValue={30} disabled={false} /> */}
+                </PropertyCompontentRight>
+              </PropertyCompontentWrap>
+            );
+          })}
+        </EColRight>
       </Row>
     </>
   );
 };
 
 export default Editor;
+
+const PropertyCompontentWrap = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+`;
+const PropertyCompontentLeft = styled.div`
+  width: 20%;
+  text-align: right;
+  margin-right: 10px;
+`;
+const PropertyCompontentRight = styled.div`
+  width: 80%;
+`;
 
 const ERow = styled(Row)`
   height: 7vh;
@@ -151,7 +236,36 @@ const CContentDiv = styled.div`
   margin-top: 50px;
   max-height: 80vh;
 `;
+const CContentComponentItem = styled.div`
+  &:hover {
+    border-color: red;
+    border-width: 1px;
+    border-style: dashed;
+  }
+`;
+
 const EColRight = styled(Col)`
   min-height: 93vh;
-  background-color: blue;
+  overflow: hidden;
+  width: 300px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  flex-direction: column;
 `;
+
+const textComponentProps = {
+  text: "hello",
+  color: "#fff",
+};
+
+const propsMap = {
+  text: {
+    component: "input",
+  },
+  color: {
+    component: "color-picker",
+  },
+};

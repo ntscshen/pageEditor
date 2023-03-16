@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "store";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import _ from "lodash";
 import { textDefaultProps } from "Component/default.props";
 
 export interface ComponentProps {
@@ -53,14 +54,34 @@ export const initialState: ComponentData[] = [
     type: "text",
     props: {
       ...textDefaultProps,
-      text: "hello3",
+      text: "hello1",
       fontSize: "30px",
       color: "lightpink",
     },
   },
+  {
+    id: uuidv4(),
+    name: "l-text",
+    type: "text2",
+    props: {
+      ...textDefaultProps,
+      text: "hello2",
+      fontSize: "30px",
+      color: "red",
+    },
+  },
+  {
+    id: uuidv4(),
+    name: "l-text",
+    type: "text3",
+    props: {
+      ...textDefaultProps,
+      text: "hello3",
+      fontSize: "30px",
+      color: "pink",
+    },
+  },
 ];
-
-console.log("testComponents :>> ", initialState);
 
 // -----
 // 当前这个切片， 需要维护一个状态库
@@ -68,7 +89,6 @@ console.log("testComponents :>> ", initialState);
 export const templateAsync = createAsyncThunk(
   "Editor/getEditor",
   async (item: string) => {
-    console.log("item11111 :>> ", item);
     axios
       .get("//localhost:3007/templates", {
         params: {
@@ -125,8 +145,24 @@ export const selectEditor = (state: RootState) => state.components;
 
 export const CurrentElementSlice = createSlice({
   name: "currentElement",
-  initialState: {},
-  reducers: {},
+  initialState: {
+    item: {},
+  },
+  reducers: {
+    updateItem: (state, action) => {
+      state.item = { ...state.item, ...action.payload };
+    },
+    // deleteItem: (state, action) => {
+    //   delete state.item[action.payload];
+    // },
+    addCurrentComponent: (state, action) => {
+      console.log("action1111111 :>> ", action.payload);
+      console.log("state111 :>> ", state);
+      // state = { ...action.payload };
+      // const tempState = _.cloneDeep(state)
+      state.item = { ...state.item, ...action.payload };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(templateAsync.pending, (state) => {
@@ -142,4 +178,7 @@ export const CurrentElementSlice = createSlice({
 });
 
 export const CurrentElementSliceAction = CurrentElementSlice.actions;
-export const selectCurrentElement = (state: RootState) => state.components;
+export const selectCurrentElement = (state: RootState) => {
+  console.log("state :>> ", state);
+  return state.currentElement;
+};

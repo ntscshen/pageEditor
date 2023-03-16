@@ -46,7 +46,9 @@ const TemplateDetail = () => {
                   {data.created}
                 </Descriptions.Item>
               </Descriptions>
-              <Button type="primary">使用当前模板</Button>
+              <Link to={"/editor"}>
+                <Button type="primary">使用当前模板</Button>
+              </Link>
             </div>
           </CDiv>
         </CContent>
