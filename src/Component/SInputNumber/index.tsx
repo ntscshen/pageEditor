@@ -18,8 +18,21 @@ const SInputNumber = (props: SInputNumberProps) => {
 
   // 每次拿到都是之前的数据
   const CurrentComponents = useSelector(selectCurrentElement);
+  console.log("CurrentComponents :>> ", CurrentComponents);
+  console.log("CurrentComponents :>> ", CurrentComponents);
+  console.log("CurrentComponents :>> ", CurrentComponents);
 
   const handleChange = (value: number | string | null) => {
+    dispatch(
+      CurrentElementSliceAction.updateCurrentItem({
+        ...CurrentComponents.item,
+        props: {
+          ...CurrentComponents.item.props,
+          fontSize: value + "px",
+        },
+      })
+    );
+
     dispatch(
       editorSliceAction.editorComponent({
         ...CurrentComponents,

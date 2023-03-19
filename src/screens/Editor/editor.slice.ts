@@ -125,7 +125,10 @@ export const EditorSlice = createSlice({
     },
     editorComponent: (state, action) => {
       const payloadItem = action.payload.item;
+      console.log("payloadItem :>> ", action);
+
       const _index = state.findIndex((item) => item.id === payloadItem.id);
+      // console.log('{ ...payloadItem } :>> ', { ...payloadItem });
       state.splice(_index, 1, { ...payloadItem });
     },
   },
@@ -144,7 +147,10 @@ export const EditorSlice = createSlice({
 });
 
 export const editorSliceAction = EditorSlice.actions;
-export const selectEditor = (state: RootState) => state.components;
+export const selectEditor = (state: RootState) => {
+  console.log("state :>> ", state);
+  return state.components;
+};
 
 // --------- --------- ---------
 
@@ -156,7 +162,8 @@ export const CurrentElementSlice = createSlice({
     },
   },
   reducers: {
-    updateItem: (state, action) => {
+    updateCurrentItem: (state, action) => {
+      console.log("---------------------- :>> ", action.payload);
       state.item = { ...state.item, ...action.payload };
     },
     // deleteItem: (state, action) => {

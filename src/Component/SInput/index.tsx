@@ -5,6 +5,7 @@ import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "store";
 import {
+  CurrentElementSliceAction,
   editorSliceAction,
   selectCurrentElement,
 } from "screens/Editor/editor.slice";
@@ -25,6 +26,19 @@ const SInput = (props: SInputProps) => {
   }, [props.text]);
 
   useEffect(() => {
+    console.log("11111111111 :>> ", 11111111111);
+
+    dispatch(
+      CurrentElementSliceAction.updateCurrentItem({
+        ...CurrentComponents.item,
+        props: {
+          ...CurrentComponents.item.props,
+          text: value,
+        },
+      })
+    );
+
+    console.log("2322222222 :>> ", 2322222222);
     dispatch(
       editorSliceAction.editorComponent({
         ...CurrentComponents,
