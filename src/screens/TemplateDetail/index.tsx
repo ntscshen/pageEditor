@@ -9,7 +9,6 @@ const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log("apiUrl :>> ", apiUrl);
 
 const data = {
   id: 1,

@@ -2,40 +2,54 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "@emotion/styled";
 
 import { Input } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "store";
+import {
+  editorSliceAction,
+  selectCurrentElement,
+} from "screens/Editor/editor.slice";
 
 interface SInputProps {
   [key: string]: any;
 }
 
 const SInput = (props: SInputProps) => {
-  return <Input placeholder={props.extraProps.placeholder} />;
-  // return (
-  //   <>
-  //     <PropertyCompontentWrap>
-  //       <PropertyCompontentLeft>{props.text}: </PropertyCompontentLeft>
-  //       <PropertyCompontentRight>
-  //         <Input placeholder={props.extraProps.placeholder} />
-  //         {/* <InputNumber min={1} max={10} defaultValue={3} />
-  //                 <Slider defaultValue={30} disabled={false} /> */}
-  //       </PropertyCompontentRight>
-  //     </PropertyCompontentWrap>
-  //   </>
-  // );
+  const dispatch = useDispatch<AppDispatch>();
+  const CurrentComponents = useSelector(selectCurrentElement);
+
+  console.log("props?.text :>> ", props?.text);
+  const [value, setValue] = useState(props?.text);
+
+  useEffect(() => {
+    setValue(props.text);
+  }, [props.text]);
+
+  useEffect(() => {
+    dispatch(
+      editorSliceAction.editorComponent({
+        ...CurrentComponents,
+        item: {
+          ...CurrentComponents.item,
+          props: {
+            ...CurrentComponents.item.props,
+            text: value,
+          },
+        },
+      })
+    );
+  }, [value]);
+
+  const handleChange = (evt: any) => {
+    setValue(evt.target.value);
+  };
+
+  return (
+    <Input
+      placeholder={props.extraProps.placeholder}
+      value={value}
+      onChange={handleChange}
+    />
+  );
 };
 
 export default SInput;
-
-const PropertyCompontentWrap = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  margin-bottom: 10px;
-`;
-const PropertyCompontentLeft = styled.div`
-  width: 20%;
-  text-align: right;
-  margin-right: 10px;
-`;
-const PropertyCompontentRight = styled.div`
-  width: 80%;
-`;

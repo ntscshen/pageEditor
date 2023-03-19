@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import _ from "lodash";
 import { textDefaultProps } from "Component/default.props";
+import { useSelector } from "react-redux";
 
 export interface ComponentProps {
   props: { [key: string]: any };
@@ -109,7 +110,6 @@ export const EditorSlice = createSlice({
   initialState,
   reducers: {
     additionComponent: (state, action) => {
-      console.log("action :>> ", action);
       state.push({
         id: uuidv4(),
         name: "l-text",
@@ -123,6 +123,11 @@ export const EditorSlice = createSlice({
         },
       });
     },
+    editorComponent: (state, action) => {
+      const payloadItem = action.payload.item;
+      const _index = state.findIndex((item) => item.id === payloadItem.id);
+      state.splice(_index, 1, { ...payloadItem });
+    },
   },
   extraReducers(builder) {
     builder
@@ -133,7 +138,7 @@ export const EditorSlice = createSlice({
         console.log("fulfilled :>> ", state, action);
       })
       .addCase(templateAsync.rejected, (state) => {
-        console.log("state :>> ", state);
+        console.log("state :>> ", ...state);
       });
   },
 });
@@ -146,7 +151,9 @@ export const selectEditor = (state: RootState) => state.components;
 export const CurrentElementSlice = createSlice({
   name: "currentElement",
   initialState: {
-    item: {},
+    item: {
+      props: {},
+    },
   },
   reducers: {
     updateItem: (state, action) => {
@@ -157,9 +164,6 @@ export const CurrentElementSlice = createSlice({
     // },
     addCurrentComponent: (state, action) => {
       console.log("action1111111 :>> ", action.payload);
-      console.log("state111 :>> ", state);
-      // state = { ...action.payload };
-      // const tempState = _.cloneDeep(state)
       state.item = { ...state.item, ...action.payload };
     },
   },
@@ -179,6 +183,5 @@ export const CurrentElementSlice = createSlice({
 
 export const CurrentElementSliceAction = CurrentElementSlice.actions;
 export const selectCurrentElement = (state: RootState) => {
-  console.log("state :>> ", state);
   return state.currentElement;
 };

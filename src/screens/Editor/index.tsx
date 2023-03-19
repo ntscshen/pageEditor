@@ -22,7 +22,6 @@ import { mapPropsToForms } from "Component/default.props";
 import SInput from "Component/SInput";
 import SInputNumber from "Component/SInputNumber";
 import SSlider from "Component/SSlider";
-// import {} from '../'
 
 interface defaultTemplatesProps {
   id: number;
@@ -34,7 +33,6 @@ const Editor = (props: any) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const components = useSelector(selectEditor);
-
   const CurrentComponents = useSelector(selectCurrentElement);
 
   useCallback(() => {}, []);
@@ -88,15 +86,14 @@ const Editor = (props: any) => {
   };
 
   let finalProps: any = [];
-  _.mapKeys(CurrentComponents.item, (value, key: any) => {
+
+  _.mapKeys(CurrentComponents?.item?.props, (value, key: any) => {
     if (key) {
-      console.log("CurrentComponents :>> ", CurrentComponents);
-      console.log("key :>> ", key);
-      console.log("mapPropsToForms :>> ", mapPropsToForms);
       // @ts-ignore
       const mapProps = mapPropsToForms[key];
-      console.log("mapProps :>> ", mapProps);
-      mapProps && finalProps.push(mapProps);
+
+      mapProps &&
+        finalProps.push({ ...mapProps, text: key === "text" ? value : "" });
     }
   });
   console.log("finalProps :>> ", finalProps);
@@ -124,7 +121,7 @@ const Editor = (props: any) => {
         break;
     }
   };
-
+  console.log("components :>> ", components);
   return (
     <>
       <ERow>
@@ -138,32 +135,31 @@ const Editor = (props: any) => {
         </EColLeft>
         <EColContent flex="auto">
           <CContentDiv>
-            {components.map(({ props }) => {
+            {components.map((component) => {
               return (
                 <CContentComponentItem
                   onClick={() => {
+                    console.log("component.id :>> ", component.id);
                     dispatch(
-                      CurrentElementSliceAction.addCurrentComponent(props)
+                      CurrentElementSliceAction.addCurrentComponent(component)
                     );
                   }}
                 >
-                  <SText {...props} />
+                  <SText {...component.props} />
                 </CContentComponentItem>
               );
             })}
           </CContentDiv>
         </EColContent>
-        <EColRight flex="300px">
-          {finalProps.map((item: any) => {
+        <EColRight>
+          {finalProps?.map((item: any) => {
             return (
               <PropertyCompontentWrap>
-                <PropertyCompontentLeft>{item.text}: </PropertyCompontentLeft>
+                <PropertyCompontentLeft>
+                  {item.extraProps.name}:{" "}
+                </PropertyCompontentLeft>
                 <PropertyCompontentRight>
                   {componentForm(item)}
-                  {/* <item.component {...item} /> */}
-                  {/* <Input placeholder="Basic usage" /> */}
-                  {/* <InputNumber min={1} max={10} defaultValue={3} />
-                  <Slider defaultValue={30} disabled={false} /> */}
                 </PropertyCompontentRight>
               </PropertyCompontentWrap>
             );

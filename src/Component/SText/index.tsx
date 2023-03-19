@@ -42,6 +42,10 @@ const STextComponent = (props: STextComponentProps) => {
           </Button>
         );
       default:
+        console.log(
+          "SText - SText - SText - SText - SText - SText :>> ",
+          props
+        );
         return (
           <div style={{ ...props }} onClick={onHandleClick}>
             {props?.text}

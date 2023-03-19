@@ -71,7 +71,6 @@ const list = [
     created: 1400251593,
   },
 ];
-console.log("apiUrl :>> ", apiUrl);
 const Home = () => {
   const templateList = useSelector(selectTemplateList);
   // const dispatch = useDispatch();

@@ -46,6 +46,7 @@ export const mapPropsToForms = {
     text: "文本",
     value: "",
     extraProps: {
+      name: "文本",
       placeholder: "请输入文本内容",
     },
   },
@@ -55,9 +56,11 @@ export const mapPropsToForms = {
     text: "字号",
     value: "",
     extraProps: {
-      min: 1,
-      max: 5,
-      defaultValue: 3,
+      name: "字号",
+      min: 12,
+      max: 100,
+      defaultValue: 30,
+      lineHeight: 30,
     },
   },
   lineHeight: {
@@ -66,8 +69,47 @@ export const mapPropsToForms = {
     text: "行高",
     value: "",
     extraProps: {
-      defaultValue: 30,
+      name: "行高",
+      min: 1,
+      max: 10,
+      defaultValue: 1,
       disabled: false,
     },
   },
 };
+
+const textAlign = {
+  component: "RadioChangeEvent",
+  subComponent: "Slider",
+  text: "对齐",
+  value: "",
+  options: [
+    { value: "left", text: "左" },
+    { value: "center", text: "中" },
+    { value: "right", text: "右" },
+  ],
+  extraProps: {
+    defaultValue: 30,
+    disabled: false,
+  },
+  initTransform: (v: string) => parseInt(v),
+  afterTransform: (e: number) => (e ? `${e}px` : ""),
+};
+
+const fontFamily = {
+  component: "Select",
+  text: "字体",
+  options: [
+    { value: "", text: "无" },
+    { value: "宋体", text: '"SimSun", "STSong"' },
+    { value: "黑体", text: '"SimHei", "STHeiti"' },
+    { value: "楷体", text: '"KaiTi", "STKaiti"' },
+    { value: "仿宋", text: '"FangSong", "STFangsong"' },
+  ],
+};
+
+// 新增配置组件: RadioChangeEvent Select
+// 修改内容之后，将被修改的值打印出来
+// { key: 'text', value: 'hello2' }
+// { key: 'textAlign', value: 'center' }
+// 直接改变 store 中的值

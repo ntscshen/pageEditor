@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "store";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log("apiUrl :>> ", apiUrl);
 
 const ProjectList = () => {
   const [param, setparam] = useState({
